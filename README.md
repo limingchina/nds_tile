@@ -48,6 +48,9 @@ One can also add "--log_level debug" in the command line to see some log message
 
 `nds_tile` is developed based on the Java implementation of NDS tiles available at [rondiplomatico/nds-tiles](https://github.com/rondiplomatico/nds-tiles). The goal of the Python port is to provide a similar set of functionalities in a language that is widely used for data science and geographic information systems.
 
+https://oxidase.github.io/nds/# is useful to browse the NDS tiles on a map. One can also register an account on https://www.nds.live and
+download packages from https://artifactory.nds-association.org/ui/repos/tree/General/tooling-pypi/ndsmath, which also contains python utilities for NDS tiles.
+
 ## Contributing
 
 Contributions to `nds_tile` are welcome! Please fork the repository, make your changes, and submit a pull request. Ensure that all code is well-documented and includes appropriate tests.
