@@ -15,7 +15,7 @@
 
 ## Usage
 
-Here is a basic example of how to use `nds_tile`:
+Here is a basic example of how to use the class NDSTile:
 
 ```python
 from NDSTile import NDSTile
@@ -30,12 +30,19 @@ print(f"Tile ID: {tile.packed_id()}")
 center = tile.get_center()
 print(f"Center in NDSCoordinates: {center.longitude}, {center.latitude}")
 
-# Convert the center to GeoJSON
+# Convert the center to GeoJSON, which will show the WGS84 coordinates
 print(f"Center: {center.to_geojson()}")
 
 # Get the bounding box of the tile in GeoJSON
 print(f"Bounding Box: {tile.get_bbox().to_geojson()}")
 ```
+
+If you want to use it as a command-line tool, the following command can be used:
+```bash
+python NDSTile.py 545666601 33801982
+```
+They are the tiles containing Berlin and Sydney, repsectively.
+One can also add "--log_level debug" in the command line to see some log messages for debugging.
 
 ## Development
 
