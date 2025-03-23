@@ -1,8 +1,8 @@
-# NDSTile.py
+# nds_tile
 
 ## Description
 
-`NDSTile.py` is a Python implementation of the NDS Tile scheme, which follows the NDS Format Specification, Version 2.5.4, §7.3.1. This library provides functionality to create, manipulate, and query NDS tiles, which are a way of dividing the Earth's surface into hierarchical geographic regions.
+`nds_tile` is a Python implementation of the NDS Tile scheme, which follows the NDS Format Specification, Version 2.5.4, §7.3.1. This library provides functionality to create, manipulate, and query NDS tiles, which are a way of dividing the Earth's surface into hierarchical geographic regions.
 
 ## Features
 
@@ -15,7 +15,7 @@
 
 ## Usage
 
-Here is a basic example of how to use `NDSTile.py`:
+Here is a basic example of how to use `nds_tile`:
 
 ```python
 from NDSTile import NDSTile
@@ -39,11 +39,11 @@ print(f"Bounding Box: {tile.get_bbox().to_geojson()}")
 
 ## Development
 
-`NDSTile.py` is developed based on the Java implementation of NDS tiles available at [rondiplomatico/nds-tiles](https://github.com/rondiplomatico/nds-tiles). The goal of the Python port is to provide a similar set of functionalities in a language that is widely used for data science and geographic information systems.
+`nds_tile` is developed based on the Java implementation of NDS tiles available at [rondiplomatico/nds-tiles](https://github.com/rondiplomatico/nds-tiles). The goal of the Python port is to provide a similar set of functionalities in a language that is widely used for data science and geographic information systems.
 
 ## Contributing
 
-Contributions to `NDSTile.py` are welcome! Please fork the repository, make your changes, and submit a pull request. Ensure that all code is well-documented and includes appropriate tests.
+Contributions to `nds_tile` are welcome! Please fork the repository, make your changes, and submit a pull request. Ensure that all code is well-documented and includes appropriate tests.
 
 ## License
 
@@ -51,7 +51,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Contact
 
-For any questions or issues, please open an issue on the [GitHub repository](https://github.com/rondiplomatico/nds-tiles).
+For any questions or issues, please open(https://github.com/limingchina/nds_tile/issues) an issue.
 
 ---
 
