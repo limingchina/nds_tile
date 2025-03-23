@@ -4,22 +4,6 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-def to_signed_32bit(value):
-    """
-    Convert an integer to a signed 32-bit integer with proper overflow behavior.
-    This emulates Java's 32-bit integer behavior in Python.
-    """
-    # Perform 32-bit masking and sign extension
-    mask = 0xFFFFFFFF  # 32 bits of 1's
-    value = value & mask  # Apply mask to get lowest 32 bits
-    
-    # If the highest bit is set (negative in two's complement)
-    if value & 0x80000000:
-        # Extend the sign by setting all the bits above bit 31 to 1
-        value = value | ~mask
-    
-    return value
-
 class NDSCoordinate:
     """
     Implementation of a NDS coordinate, according to the NDS Format Specification, Version 2.5.4, §7.2.1.
@@ -53,8 +37,6 @@ class NDSCoordinate:
         if len(args) == 2:
             if isinstance(args[0], int) and isinstance(args[1], int):  # (longitude, latitude)
                 longitude, latitude = args
-                latitude = to_signed_32bit(latitude)
-                longitude = to_signed_32bit(longitude)
                 longitude = min(longitude, self.MAX_LONGITUDE)
                 latitude = min(latitude, self.MAX_LATITUDE)
                 self.verify(longitude, latitude)
@@ -71,24 +53,28 @@ class NDSCoordinate:
 
         elif len(args) == 1:  # Morton code
             nds_morton_coordinates = args[0]
-            lat = 0
-            lon = 0
-            for pos in range(32):
-                if pos < 31 and (nds_morton_coordinates & (1 << (pos * 2 + 1))):
-                    lat |= 1 << pos
-                if nds_morton_coordinates & (1 << (pos * 2)):
-                    lon |= 1 << pos
+            YBASE = 1 << 30
+            XBASE = 1 << 31
+            bit = 1
+            lon = lat = 0
 
-            # with NDS, the latitude value is considered a 31-bit signed integer.
-            # hence, if the 31st bit is 1, this means we have a negative integer, requiring
-            # to set the 32st bit to 1 for native java 32bit signed integers.
-            if lat & (1 << 30):  # Handle negative latitude
-                lat |= 1 << 31
+            for i in range(31):
+                lon |= nds_morton_coordinates & bit
+                nds_morton_coordinates >>= 1
+                lat |= nds_morton_coordinates & bit
+                bit <<= 1
+
+            lon |= nds_morton_coordinates & bit
+            nds_morton_coordinates >>= 1
+
+            # Handle negative values for latitude and longitute
+            if lat >= YBASE:
+                lat -= (1 << 31)
+            if lon >= XBASE:
+                lon -= (1 << 32)
             print_binary_representation(lat, "lat binary")
             print_binary_representation(lon, "lon binary")
             logger.debug("lat: %d, lon: %d", lat, lon)
-            lat = to_signed_32bit(lat)
-            lon = to_signed_32bit(lon)
             lon = min(lon, self.MAX_LONGITUDE)
             lat = min(lat, self.MAX_LATITUDE)
             self.verify(lon, lat)
